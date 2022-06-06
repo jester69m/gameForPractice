@@ -13,17 +13,25 @@ public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyH;
 
+    public final int screenX;
+    public final int screenY;
+
     public Player(GamePanel gp, KeyHandler keyH){
         this.gp = gp;
         this.keyH = keyH;
+
+        screenX = gp.screenWidth/2 - (gp.tileSize/2);
+        screenY = gp.screenHeight/2 - (gp.tileSize/2);
+
+        solidArea = new Rectangle(8,16,32,32);
 
         setDefaultValues();
         getPlayerImage();
     }
 
     public void setDefaultValues(){
-        x = 100;
-        y = 100;
+        worldX = gp.tileSize * 23;
+        worldY= gp.tileSize * 23;
         speed = 4;
         direction = "down";
     }
@@ -43,69 +51,84 @@ public class Player extends Entity{
             e.printStackTrace();
         }
     }
-    public void update(){
-        if(keyH.upPressed == true || keyH.downPressed == true ||
-                keyH.leftPressed == true || keyH.rightPressed == true){
+    public void update() {
+        if (keyH.upPressed == true || keyH.downPressed == true ||
+                keyH.leftPressed == true || keyH.rightPressed == true) {
 
-            if(keyH.upPressed == true){
+            if (keyH.upPressed == true) {
                 direction = "up";
-                y -= speed;
-            }
-            else if(keyH.downPressed == true){
+            } else if (keyH.downPressed == true) {
                 direction = "down";
-                y += speed;
-            }
-            else if(keyH.leftPressed == true){
+            } else if (keyH.leftPressed == true) {
                 direction = "left";
-                x -= speed;
-            }
-            else if(keyH.rightPressed == true){
+            } else if (keyH.rightPressed == true) {
                 direction = "right";
-                x += speed;
             }
 
-            spriteCounter++;
-            if(spriteCounter > 12){
-                if(spriteNum == 1)
-                    spriteNum = 2;
-                else if(spriteNum == 2)
-                    spriteNum = 1;
-                spriteCounter = 0;
+            //Check tile collision
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+
+            //if collision is false, player can move
+            if (collisionOn == false) {
+                switch (direction) {
+                    case "up" -> {
+                        worldY -= speed;
+                    }
+                    case "down" -> {
+                        worldY += speed;
+                    }
+                    case "left" -> {
+                        worldX -= speed;
+                    }
+                    case "right" -> {
+                        worldX += speed;
+                    }
+                }
+
+                spriteCounter++;
+                if (spriteCounter > 12) {
+                    if (spriteNum == 1)
+                        spriteNum = 2;
+                    else if (spriteNum == 2)
+                        spriteNum = 1;
+                    spriteCounter = 0;
+                }
             }
         }
     }
-    public void draw(Graphics2D g2){
+        public void draw (Graphics2D g2){
 
-        BufferedImage image = null;
+            BufferedImage image = null;
 
-        switch(direction){
-            case "up" -> {
-                if(spriteNum == 1)
-                    image = up1;
-                if(spriteNum == 2)
-                    image = up2;
+            switch (direction) {
+                case "up" -> {
+                    if (spriteNum == 1)
+                        image = up1;
+                    if (spriteNum == 2)
+                        image = up2;
+                }
+                case "down" -> {
+                    if (spriteNum == 1)
+                        image = down1;
+                    if (spriteNum == 2)
+                        image = down2;
+                }
+                case "left" -> {
+                    if (spriteNum == 1)
+                        image = left1;
+                    if (spriteNum == 2)
+                        image = left2;
+                }
+                case "right" -> {
+                    if (spriteNum == 1)
+                        image = right1;
+                    if (spriteNum == 2)
+                        image = right2;
+                }
             }
-            case "down" -> {
-                if(spriteNum == 1)
-                    image = down1;
-                if(spriteNum == 2)
-                    image = down2;
-            }
-            case "left" -> {
-                if(spriteNum == 1)
-                    image = left1;
-                if(spriteNum == 2)
-                    image = left2;
-            }
-            case "right" -> {
-                if(spriteNum == 1)
-                    image = right1;
-                if(spriteNum == 2)
-                    image = right2;
-            }
+            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
         }
-        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize,null);
-    }
 
 
 }
