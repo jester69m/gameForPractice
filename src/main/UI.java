@@ -130,25 +130,37 @@ public class UI {
             int y =gp.tileSize*3;
             g2.drawString(text,x,y);
 
-            text = "Swordsman";
+            text = "Knight";
             x = getXForCenteredText(text);
-            y =gp.tileSize;
+            y +=gp.tileSize*3;
             g2.drawString(text,x,y);
+            if(commandNum == 0){
+                g2.drawString(">",x-gp.tileSize,y);
+            }
 
             text = "Thief";
             x = getXForCenteredText(text);
-            y =gp.tileSize;
+            y +=gp.tileSize;
             g2.drawString(text,x,y);
+            if(commandNum == 1){
+                g2.drawString(">",x-gp.tileSize,y);
+            }
 
             text = "Wizard";
             x = getXForCenteredText(text);
-            y =gp.tileSize;
+            y +=gp.tileSize;
             g2.drawString(text,x,y);
+            if(commandNum == 2){
+                g2.drawString(">",x-gp.tileSize,y);
+            }
 
             text = "Back";
             x = getXForCenteredText(text);
-            y =gp.tileSize*2;
+            y +=gp.tileSize*2;
             g2.drawString(text,x,y);
+            if(commandNum == 3){
+                g2.drawString(">",x-gp.tileSize,y);
+            }
         }
 
     }
