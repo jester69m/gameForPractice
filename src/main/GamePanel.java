@@ -1,5 +1,6 @@
 package main;
 
+import entity.Entity;
 import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
@@ -27,7 +28,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //SYSTEM
     TileManager tileM = new TileManager(this);
-    KeyHandler  keyH = new KeyHandler();
+    public KeyHandler  keyH = new KeyHandler(this);
     Sound music = new Sound();
     Sound se = new Sound();
     public CollisionChecker cChecker = new CollisionChecker(this);
@@ -38,7 +39,14 @@ public class GamePanel extends JPanel implements Runnable {
    //ENTITY AND OBJECT
     public Player player = new Player(this, keyH);
     public SuperObject obj[] = new SuperObject[10];
+    public Entity npc[] = new Entity[10];
 
+    //GAME STATE
+    public int gameState;
+    public final int TITLE_STATE = 0;
+    public final int PLAY_STATE = 1;
+    public final int PAUSE_STATE = 2;
+    public final int DIALOGUE_STATE = 3;
 
     public GamePanel(){
 
@@ -51,8 +59,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame(){
         aSetter.setObject();
+        aSetter.setNPC();
 
         playMusic(0);
+        stopMusic();
+        gameState = TITLE_STATE;
     }
     public void startGameThread(){
         gameThread = new Thread(this);
@@ -83,18 +94,24 @@ public class GamePanel extends JPanel implements Runnable {
                 drawCount++;
             }
             if(timer >= 1000000000){
-                System.out.println("FPS: "+drawCount);
                 drawCount = 0;
                 timer = 0;
             }
-
-
         }
     }
     public void update(){
-        player.update();
+        if(gameState == PLAY_STATE){
+            //PLAYER
+            player.update();
+            //NPC
+            for(int i=0;i<npc.length;i++){
+                if(npc[i]!=null){
+                    npc[i].update();
+                }
+            }
+        } else if(gameState == PAUSE_STATE){
 
-
+        }
     }
     public void paintComponent(Graphics g){
 
@@ -102,23 +119,34 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        //TILE
-        tileM.draw(g2);
-
-        //OBJECT
-        for(int i = 0; i < obj.length; i++){
-            if(obj[i] != null){
-                obj[i].draw(g2,this);
-            }
+        //TITLE SCREEN
+        if(gameState == TITLE_STATE){
+            ui.draw(g2);
         }
+        else{
+            //TILE
+            tileM.draw(g2);
 
-        //PLAYER
-        player.draw(g2);
+            //OBJECT
+            for(int i = 0; i < obj.length; i++){
+                if(obj[i] != null){
+                    obj[i].draw(g2,this);
+                }
+            }
+            //NPC
+            for(int i = 0 ; i<npc.length;i++){
+                if(npc[i] != null){
+                    npc[i].draw(g2);
+                }
+            }
 
-        //UI
-        ui.draw(g2);
+            //PLAYER
+            player.draw(g2);
 
+            //UI
+            ui.draw(g2);
 
+        }
         g2.dispose();
     }
     public void playMusic(int i){

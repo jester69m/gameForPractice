@@ -31,6 +31,7 @@ public class TileManager {
             setup(1,"wall",true);
             setup(2,"water",true);
             setup(3,"tree",true);
+            setup(4,"dirt",false);
     }
     public void setup(int index,String imageName,boolean collision){
 

@@ -2,24 +2,25 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.Buffer;
 
 public class Player extends Entity{
 
-    GamePanel gp;
     KeyHandler keyH;
 
     public final int screenX;
     public final int screenY;
 
-    public int hasKey = 0;
+   // public int hasKey = 0;
 
     public Player(GamePanel gp, KeyHandler keyH){
-        this.gp = gp;
+        super(gp);
         this.keyH = keyH;
 
         screenX = gp.screenWidth/2 - (gp.tileSize/2);
@@ -44,20 +45,14 @@ public class Player extends Entity{
         direction = "down";
     }
     public void getPlayerImage(){
-        try {
-            //when I draw animation to this, I will change few String...
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/head1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/head2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/head1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/head2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/head1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/head2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/head1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/head2.png"));
-
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+        up1 = setup("/player/up1");
+        up2 = setup("/player/up2");
+        down1 = setup("/player/down1");
+        down2 = setup("/player/down2");
+        left1 = setup("/player/left1");
+        left2 = setup("/player/left2");
+        right1 = setup("/player/right1");
+        right2 = setup("/player/right2");
     }
     public void update() {
         if (keyH.upPressed == true || keyH.downPressed == true ||
@@ -81,22 +76,17 @@ public class Player extends Entity{
             int objIndex = gp.cChecker.checkObject(this,true);
             pickUpObject(objIndex);
 
+            //Check npc collision
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            interactNPC(npcIndex);
 
             //if collision is false, player can move
             if (collisionOn == false) {
                 switch (direction) {
-                    case "up" -> {
-                        worldY -= speed;
-                    }
-                    case "down" -> {
-                        worldY += speed;
-                    }
-                    case "left" -> {
-                        worldX -= speed;
-                    }
-                    case "right" -> {
-                        worldX += speed;
-                    }
+                    case "up" -> {worldY -= speed;}
+                    case "down" -> {worldY += speed;}
+                    case "left" -> {worldX -= speed;}
+                    case "right" -> {worldX += speed;}
                 }
 
                 spriteCounter++;
@@ -113,6 +103,8 @@ public class Player extends Entity{
     public void pickUpObject(int i){
         if(i!=999){
 
+
+/*
             String objectName = gp.obj[i].name;
 
             switch (objectName){
@@ -135,7 +127,7 @@ public class Player extends Entity{
                 }
                 case "Boots"->{
                     gp.playSE(1);
-                    speed+=2;
+                    speed+=1;
                     gp.obj[i]=null;
                     gp.ui.showMessage("Speed up !");
                 }
@@ -144,8 +136,17 @@ public class Player extends Entity{
                     gp.ui.gameFinished = true;
                     gp.stopMusic();
                 }
+            }*/
+        }
+    }
+    public void interactNPC(int i){
+        if(i!=999){
+            if(gp.keyH.enterPressed){
+                gp.gameState = gp.DIALOGUE_STATE;
+                gp.npc[i].speak();
             }
         }
+        gp.keyH.enterPressed=false;
     }
 
     public void draw (Graphics2D g2){
@@ -178,7 +179,7 @@ public class Player extends Entity{
                         image = right2;
                 }
             }
-            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            g2.drawImage(image, screenX, screenY,null);
     }
 
 
