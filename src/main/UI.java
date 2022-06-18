@@ -1,6 +1,8 @@
 package main;
 
+import object.OBJ_Heart;
 import object.OBJ_Key;
+import object.SuperObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,6 +16,7 @@ public class UI {
     Graphics2D g2;
     Font robotoL, purisaB;
 
+    BufferedImage heart_full,heart_half,heart_blank;
     //BufferedImage keyImage;
 
     public boolean messageOn = false;
@@ -39,6 +42,12 @@ public class UI {
             e.printStackTrace();
         }
 
+        SuperObject heart = new OBJ_Heart(gp);
+        heart_full = heart.image;
+        heart_half = heart.image2;
+        heart_blank = heart.image3;
+
+
       //  OBJ_Key key = new OBJ_Key(gp);
       //  keyImage = key.image;
     }
@@ -60,16 +69,47 @@ public class UI {
         }
         //PLAY STATE
         else if(gp.gameState == gp.PLAY_STATE){
+            drawPlayerLife();
 
         }
         //PAUSE STATE
         else if(gp.gameState == gp.PAUSE_STATE){
+            drawPlayerLife();
             drawPauseScreen();
         }
         //DIALOG STATE
         else if(gp.gameState == gp.DIALOGUE_STATE){
+            drawPlayerLife();
             drawDialogueScreen();
         }
+    }
+    public void drawPlayerLife(){
+
+        int x = gp.tileSize/2;
+        int y = gp.tileSize/2;
+        int i = 0;
+
+        while(i < gp.player.maxLife/2){
+            g2.drawImage(heart_blank, x, y, null);
+            i++;
+            x += gp.tileSize;
+        }
+
+        x = gp.tileSize/2;
+        y = gp.tileSize/2;
+        i = 0;
+
+        while(i < gp.player.life){
+            g2.drawImage(heart_half, x, y, null);
+            i++;
+            if(i < gp.player.life){
+                g2.drawImage(heart_full,x,y,null);
+            }
+            i++;
+            x += gp.tileSize;
+        }
+
+
     }
     public void drawTitleScreen(){
 
@@ -127,12 +167,12 @@ public class UI {
 
             String text = "Select your class";
             int x = getXForCenteredText(text);
-            int y =gp.tileSize*3;
+            int y = gp.tileSize*3;
             g2.drawString(text,x,y);
 
             text = "Knight";
             x = getXForCenteredText(text);
-            y +=gp.tileSize*3;
+            y += gp.tileSize*3;
             g2.drawString(text,x,y);
             if(commandNum == 0){
                 g2.drawString(">",x-gp.tileSize,y);
@@ -140,7 +180,7 @@ public class UI {
 
             text = "Thief";
             x = getXForCenteredText(text);
-            y +=gp.tileSize;
+            y += gp.tileSize;
             g2.drawString(text,x,y);
             if(commandNum == 1){
                 g2.drawString(">",x-gp.tileSize,y);
@@ -148,7 +188,7 @@ public class UI {
 
             text = "Wizard";
             x = getXForCenteredText(text);
-            y +=gp.tileSize;
+            y += gp.tileSize;
             g2.drawString(text,x,y);
             if(commandNum == 2){
                 g2.drawString(">",x-gp.tileSize,y);
@@ -156,7 +196,7 @@ public class UI {
 
             text = "Back";
             x = getXForCenteredText(text);
-            y +=gp.tileSize*2;
+            y += gp.tileSize*2;
             g2.drawString(text,x,y);
             if(commandNum == 3){
                 g2.drawString(">",x-gp.tileSize,y);
