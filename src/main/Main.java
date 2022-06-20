@@ -7,6 +7,7 @@ public class Main {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
+
         window.setTitle("Time to play");
 
         GamePanel gamePanel = new GamePanel();
