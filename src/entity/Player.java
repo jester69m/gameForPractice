@@ -60,7 +60,7 @@ public class Player extends Entity{
     }
     public void update() {
         if (keyH.upPressed == true || keyH.downPressed == true ||
-                keyH.leftPressed == true || keyH.rightPressed == true) {
+                keyH.leftPressed == true || keyH.rightPressed == true || keyH.enterPressed == true) {
 
             if (keyH.upPressed == true) {
                 direction = "up";
@@ -84,28 +84,58 @@ public class Player extends Entity{
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
 
+            //check monster collision
+            int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+            contactMonster(monsterIndex);
+
             //Check event
             gp.eHandler.checkEvent();
 
             gp.keyH.enterPressed=false;
 
             //if collision is false, player can move
-            if (collisionOn == false) {
+            if (collisionOn == false && gp.keyH.enterPressed == false) {
                 switch (direction) {
-                    case "up" -> {worldY -= speed;}
-                    case "down" -> {worldY += speed;}
-                    case "left" -> {worldX -= speed;}
-                    case "right" -> {worldX += speed;}
+                    case "up" -> {
+                        worldY -= speed;
+                    }
+                    case "down" -> {
+                        worldY += speed;
+                    }
+                    case "left" -> {
+                        worldX -= speed;
+                    }
+                    case "right" -> {
+                        worldX += speed;
+                    }
                 }
+            }
 
-                spriteCounter++;
-                if (spriteCounter > 12) {
-                    if (spriteNum == 1)
-                        spriteNum = 2;
-                    else if (spriteNum == 2)
-                        spriteNum = 1;
-                    spriteCounter = 0;
-                }
+            gp.keyH.enterPressed = false;
+
+            spriteCounter++;
+            if (spriteCounter > 12) {
+                if (spriteNum == 1)
+                    spriteNum = 2;
+                else if (spriteNum == 2)
+                    spriteNum = 1;
+                spriteCounter = 0;
+            }
+
+        }
+        /*else{
+            standCounter++;
+            if(standCounter == 20){
+                spriteNum = 1;
+                standCounter = 0;
+            }
+        }*/
+
+        if(invincible == true){
+            invincibleCounter++;
+            if(invincibleCounter > 60){
+                invincible = false;
+                invincibleCounter = 0;
             }
         }
     }
@@ -158,6 +188,15 @@ public class Player extends Entity{
 
     }
 
+    public void contactMonster(int i){
+        if(i != 999){
+            if(invincible == false){
+                life -= 1;
+                invincible= true;
+            }
+
+        }
+    }
     public void draw (Graphics2D g2){
 
             BufferedImage image = null;
@@ -188,7 +227,19 @@ public class Player extends Entity{
                         image = right2;
                 }
             }
+
+            if(invincible == true){
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+            }
+
             g2.drawImage(image, screenX, screenY,null);
+
+            //reset alpha
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.f));
+
+            //g2.setFont(new Font("Arial", Font.PLAIN, 26) );
+            //g2.setColor(Color.white);
+            //g2.drawString("Invincible: " + invincibleCounter, 10, 400);
     }
 
 
