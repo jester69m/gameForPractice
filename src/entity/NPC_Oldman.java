@@ -11,21 +11,24 @@ public class NPC_Oldman extends Entity{
     public NPC_Oldman(GamePanel gp){
         super(gp);
 
+        type = 1;
         direction="down";
         speed=1;
+        maxLife = 20;
+        life = maxLife;
 
         getImage();
         setDialogue();
     }
     public void getImage(){
-        up1 = setup("/npc/oldman");
-        up2 = setup("/npc/oldman");
-        down1 = setup("/npc/oldman");
-        down2 = setup("/npc/oldman");
-        left1 = setup("/npc/oldman");
-        left2 = setup("/npc/oldman");
-        right1 = setup("/npc/oldman");
-        right2 = setup("/npc/oldman");
+        up1 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
+        up2 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
+        down1 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
+        down2 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
+        left1 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
+        left2 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
+        right1 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
+        right2 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
     }
     public void setDialogue(){
         dialogues[0] = "Hello, traveller.";
