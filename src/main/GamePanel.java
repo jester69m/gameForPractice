@@ -45,6 +45,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity obj[] = new Entity[10];
     public Entity npc[] = new Entity[10];
     public Entity monster[] = new Entity[20];
+    ArrayList<Entity> projectileList = new ArrayList<>();
     ArrayList<Entity> entityList = new ArrayList<>();
 
 
@@ -54,6 +55,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int PLAY_STATE = 1;
     public final int PAUSE_STATE = 2;
     public final int DIALOGUE_STATE = 3;
+    public final int CHARACTER_STATE = 4;
 
     public GamePanel(){
 
@@ -66,10 +68,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame(){
         aSetter.setObject();
-        aSetter.setNPC();
+      //  aSetter.setNPC();
         aSetter.setMonster();
 
-        playMusic(0);
+     //   playMusic(0);
         stopMusic();
         gameState = TITLE_STATE;
     }
@@ -119,7 +121,12 @@ public class GamePanel extends JPanel implements Runnable {
             }
             for(int i = 0; i < monster.length; i++){
                 if(monster[i] != null){
-                    monster[i].update();
+                    if(monster[i].alive==true && monster[i].dying  == false){
+                        monster[i].update();
+                    }
+                    if(monster[i].alive = false){
+                        monster[i] = null;
+                    }
                 }
             }
         } else if(gameState == PAUSE_STATE){
@@ -164,8 +171,8 @@ public class GamePanel extends JPanel implements Runnable {
 
                 @Override
                 public int compare(Entity e1, Entity e2) {
-                    int result = Integer.compare(e1.worldY, e2.worldY);
 
+                    int result = Integer.compare(e1.worldY, e2.worldY);
                     return result;
                 }
             });
@@ -190,7 +197,7 @@ public class GamePanel extends JPanel implements Runnable {
         music.loop();
     }
     public void stopMusic(){
-        music.stop();
+        if(music!=null) music.stop();
     }
     public void playSE(int i){
         se.setFile(i);

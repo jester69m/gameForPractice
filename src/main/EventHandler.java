@@ -51,14 +51,15 @@ public class EventHandler {
             if(hit(27,16,"right")  == true){
                 damagePit(27,16,gp.DIALOGUE_STATE);
             }
-            if(hit(23,12,"up") == true){
-                healingPool(23,12,gp.DIALOGUE_STATE);
+            if(hit(23,8,"up") == true){
+                healingPool(23,8,gp.DIALOGUE_STATE);
             }
         }
 
 
     }
     public boolean hit(int col, int row, String reqDirection){
+
         boolean hit = false;
 
         gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
@@ -80,6 +81,7 @@ public class EventHandler {
         gp.player.solidArea.y = gp.player.solidAreaDefaultY;
         eventRect[col][row].x = eventRect[col][row].eventRectDefaultX;
         eventRect[col][row].y = eventRect[col][row].eventRectDefaultY;
+
         return hit;
     }
 
@@ -87,16 +89,17 @@ public class EventHandler {
         gp.gameState = gameState;
         gp.ui.currentDialogue = "You fall into a pit";
         gp.player.life -= 1;
-        eventRect[col][row].eventDone = true;
         canTouchEvent = false;
+        eventRect[col][row].eventDone = true;
     }
 
     public void healingPool(int col, int row, int gameState){
         if(gp.keyH.enterPressed == true){
             gp.gameState = gameState;
+            gp.player.attackCanceled = true;
             gp.ui.currentDialogue = "You drink the water.\nYour life has been recovered.";
             gp.player.life = gp.player.maxLife;
-            eventRect[col][row].eventDone = true;
+            gp.aSetter.setMonster();
         }
 
         gp.keyH.enterPressed = false;

@@ -12,7 +12,6 @@ public class NPC_Oldman extends Entity{
     public NPC_Oldman(GamePanel gp){
         super(gp);
 
-
         direction="down";
         speed=1;
 
@@ -28,14 +27,14 @@ public class NPC_Oldman extends Entity{
         setDialogue();
     }
     public void getImage(){
-        up1 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
-        up2 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
-        down1 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
-        down2 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
-        left1 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
-        left2 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
-        right1 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
-        right2 = setup("/npc/oldman",gp.tileSize,gp.tileSize);
+        up1 = setup("/resources/npc/oldman",gp.tileSize,gp.tileSize);
+        up2 = setup("/resources/npc/oldman",gp.tileSize,gp.tileSize);
+        down1 = setup("/resources/npc/oldman",gp.tileSize,gp.tileSize);
+        down2 = setup("/resources/npc/oldman",gp.tileSize,gp.tileSize);
+        left1 = setup("/resources/npc/oldman",gp.tileSize,gp.tileSize);
+        left2 = setup("/resources/npc/oldman",gp.tileSize,gp.tileSize);
+        right1 = setup("/resources/npc/oldman",gp.tileSize,gp.tileSize);
+        right2 = setup("/resources/npc/oldman",gp.tileSize,gp.tileSize);
     }
     public void setDialogue(){
         dialogues[0] = "Hello, traveller.";

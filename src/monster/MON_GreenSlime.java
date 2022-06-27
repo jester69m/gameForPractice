@@ -13,11 +13,14 @@ public class MON_GreenSlime extends Entity {
         super(gp);
         this.gp=gp;
 
-        type = 2;
+        type = type_monster;
         name = "Green Slime";
         speed = 1;
         maxLife = 4;
         life = maxLife;
+        attack = 2;
+        defense = 0;
+        exp = 2;
 
         solidArea.x = 3;
         solidArea.y = 18;
@@ -62,5 +65,10 @@ public class MON_GreenSlime extends Entity {
             }
             actionLockCounter=0;
         }
+    }
+    public void damageReaction(){
+
+        actionLockCounter = 0;
+        direction = gp.player.direction;
     }
 }
