@@ -29,11 +29,15 @@ public class Entity {
     public boolean collisionOn = false;
     public boolean invincible = false;
     boolean attacking = false;
+    boolean alive = false;
+    boolean dying = false;
+
 
     //COUNTER
     public int spriteCounter = 0;
     public int actionLockCounter = 0;
     public int invincibleCounter = 0;
+    int dyingCounter = 0;
 
     //CHARACTER ATTRIBUTE
     public int type; // 0 = player, 1 = npc, 2 = monster
@@ -136,7 +140,10 @@ public class Entity {
             }
 
             if(invincible == true){
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0f));
+            }
+            if(dying == true){
+                dyingAnimation();
             }
 
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
@@ -144,6 +151,47 @@ public class Entity {
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         }
     }
+
+    public void dyingAnimation(Graphics2D g2){
+        dyingCounter++;
+
+        int i = 5;
+        if(dyingCounter <= i){
+            changeAlpha(g2,0f);
+        }
+        if(dyingCounter > i && dyingCounter <= i*2){
+            changeAlpha(g2,1f);
+        }
+        if(dyingCounter >= i && dyingCounter <= i){
+            changeAlpha(g2,0f);
+        }
+        if(dyingCounter > i && dyingCounter <= i){
+            changeAlpha(g2,1f);
+        }
+        if(dyingCounter > i && dyingCounter <= i){
+            changeAlpha(g2,0f);
+        }
+        if(dyingCounter > i && dyingCounter <= i){
+            changeAlpha(g2,1f);
+        }
+        if(dyingCounter > i && dyingCounter <= i){
+            changeAlpha(g2,0f);
+        }
+        if(dyingCounter > i && dyingCounter <= i){
+            changeAlpha(g2,1f);
+        }
+
+        if(dyingCounter > 40){
+            dying = false;
+            alive = false;
+        }
+
+    }
+
+    public void changeAlpha(Graphics2D g2, float alphaValue){
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
+    }
+
 
     public BufferedImage setup(String imagePath,int width,int height){
 
