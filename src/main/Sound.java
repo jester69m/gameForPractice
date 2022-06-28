@@ -17,6 +17,9 @@ public class Sound {
         soundURL[2] = getClass().getResource("/sound/coin-sound.wav");
         soundURL[3] = getClass().getResource("/sound/door-unlocking-sound.wav");
         soundURL[4] = getClass().getResource("/sound/fanfare.wav");
+        soundURL[5] = getClass().getResource("/sound/hit-sound.wav");
+        soundURL[6] = getClass().getResource("/sound/damage-receive-sound.wav");
+        soundURL[7] = getClass().getResource("/sound/burning.wav");
     }
 
     public void setFile(int i){
@@ -29,5 +32,5 @@ public class Sound {
     }
     public void play(){ clip.start(); }
     public void loop(){ clip.loop(Clip.LOOP_CONTINUOUSLY); }
-    public void stop(){ clip.stop(); }
+    public void stop(){ if(clip!=null) clip.stop(); }
 }

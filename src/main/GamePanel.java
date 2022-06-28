@@ -3,6 +3,7 @@ package main;
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
+import tile_interactive.InteractiveTile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,10 +43,12 @@ public class GamePanel extends JPanel implements Runnable {
 
    //ENTITY AND OBJECT
     public Player player = new Player(this, keyH);
-    public Entity obj[] = new Entity[10];
+    public Entity obj[] = new Entity[20];
     public Entity npc[] = new Entity[10];
     public Entity monster[] = new Entity[20];
-    ArrayList<Entity> entityList = new ArrayList<>();
+    public InteractiveTile iTile[] = new InteractiveTile[50];
+    public ArrayList<Entity> projectileList = new ArrayList<>();
+    public ArrayList<Entity> entityList = new ArrayList<>();
 
 
     //GAME STATE
@@ -54,6 +57,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int PLAY_STATE = 1;
     public final int PAUSE_STATE = 2;
     public final int DIALOGUE_STATE = 3;
+    public final int CHARACTER_STATE = 4;
 
     public GamePanel(){
 
@@ -66,10 +70,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void setupGame(){
         aSetter.setObject();
-        aSetter.setNPC();
+       // aSetter.setNPC();
         aSetter.setMonster();
+        aSetter.setInteractiveTile();
 
-        playMusic(0);
+     //   playMusic(0);
         stopMusic();
         gameState = TITLE_STATE;
     }
@@ -119,7 +124,28 @@ public class GamePanel extends JPanel implements Runnable {
             }
             for(int i = 0; i < monster.length; i++){
                 if(monster[i] != null){
-                    monster[i].update();
+                    if(monster[i].alive==true && monster[i].dying  == false){
+                        monster[i].update();
+                    }
+                    if(monster[i].alive = false){
+                        monster[i].checkDrop();
+                        monster[i] = null;
+                    }
+                }
+            }
+            for(int i = 0; i < projectileList.size(); i++){
+                if(projectileList.get(i) != null){
+                    if(projectileList.get(i).alive==true){
+                        projectileList.get(i).update();
+                    }
+                    if(projectileList.get(i).alive == false){
+                        projectileList.remove(i);
+                    }
+                }
+            }
+            for(int i = 0; i< iTile.length; i++){
+                if(iTile[i] != null){
+                    iTile[i].update();
                 }
             }
         } else if(gameState == PAUSE_STATE){
@@ -140,6 +166,13 @@ public class GamePanel extends JPanel implements Runnable {
             //TILE
             tileM.draw(g2);
 
+            //INTERACTIVE TILE
+            for(int i = 0; i < iTile.length; i++){
+                if(iTile[i] != null){
+                    iTile[i].draw(g2);
+                }
+            }
+
             //ADD ENTITIES TO THE LIST
             entityList.add(player);
             for(int i = 0; i < npc.length; i++){
@@ -158,14 +191,19 @@ public class GamePanel extends JPanel implements Runnable {
                     entityList.add(monster[i]);
                 }
             }
+            for(int i = 0; i < projectileList.size(); i++){
+                if(projectileList.get(i) != null){
+                    entityList.add(projectileList.get(i));
+                }
+            }
 
             //SORT
             Collections.sort(entityList, new Comparator<Entity>() {
 
                 @Override
                 public int compare(Entity e1, Entity e2) {
-                    int result = Integer.compare(e1.worldY, e2.worldY);
 
+                    int result = Integer.compare(e1.worldY, e2.worldY);
                     return result;
                 }
             });
@@ -190,7 +228,7 @@ public class GamePanel extends JPanel implements Runnable {
         music.loop();
     }
     public void stopMusic(){
-        music.stop();
+        if(music!=null) music.stop();
     }
     public void playSE(int i){
         se.setFile(i);

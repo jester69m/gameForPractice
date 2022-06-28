@@ -2,6 +2,10 @@ package monster;
 
 import entity.Entity;
 import main.GamePanel;
+import object.OBJ_Coin_Bronze;
+import object.OBJ_Heart;
+import object.OBJ_ManaCrystal;
+import object.OBJ_Rock;
 
 import java.util.Random;
 
@@ -13,11 +17,15 @@ public class MON_GreenSlime extends Entity {
         super(gp);
         this.gp=gp;
 
-        type = 2;
+        type = type_monster;
         name = "Green Slime";
-        speed = 1;
+        speed = 4;
         maxLife = 4;
         life = maxLife;
+        attack = 2;
+        defense = 0;
+        exp = 2;
+        projectile = new OBJ_Rock(gp);
 
         solidArea.x = 3;
         solidArea.y = 18;
@@ -50,17 +58,51 @@ public class MON_GreenSlime extends Entity {
             int i = random.nextInt(100)+1;
             if(i<25){
                 direction = "up";
+                worldY -= speed;
             }
             if(i>25 && i <=50){
                 direction = "down";
+                worldY += speed;
             }
             if(i>50 && i <= 75){
                 direction = "left";
+                worldX -= speed;
             }
             if(i > 75 && i <=100){
                 direction = "right";
+                worldX += speed;
             }
             actionLockCounter=0;
+
+        }
+        int i = new Random().nextInt(100)+1;
+
+        if(i > 99 && projectile.alive == false && shotAvailableCounter == 30){
+            projectile.set(worldX, worldY, direction, true, this);
+            gp.projectileList.add(projectile);
+            shotAvailableCounter = 0;
+        }
+    }
+    public void damageReaction(){
+
+        actionLockCounter = 0;
+        direction = gp.player.direction;
+    }
+
+    public void checkDrop(){
+
+        int i = new Random().nextInt(100)+1;
+
+        //SET THE MONSTER DROP
+
+        if(i < 50){
+            dropItem(new OBJ_Coin_Bronze(gp));
+        }
+        if(i >= 50 && i < 75){
+            dropItem(new OBJ_Heart(gp));
+        }
+        if(i >=75 && i < 100){
+            dropItem(new OBJ_ManaCrystal(gp));
         }
     }
 }

@@ -2,10 +2,8 @@ package main;
 
 import entity.NPC_Oldman;
 import monster.MON_GreenSlime;
-import object.OBJ_Boots;
-import object.OBJ_Chest;
-import object.OBJ_Door;
-import object.OBJ_Key;
+import object.*;
+import tile_interactive.IT_DryTree;
 
 public class AssetSetter {
 
@@ -15,27 +13,49 @@ public class AssetSetter {
         this.gp=gp;
     }
     public void setObject(){
-
-        gp.obj[0] = new OBJ_Door(gp);
-        gp.obj[0].worldX = gp.tileSize*14;
-        gp.obj[0].worldY = gp.tileSize*23;
-
-        gp.obj[1] = new OBJ_Door(gp);
-        gp.obj[1].worldX = gp.tileSize*26;
-        gp.obj[1].worldY = gp.tileSize*23;
- /*       //up left way key
-        gp.obj[0] = new OBJ_Key(gp);
-        gp.obj[0].worldX = 3*gp.tileSize;
-        gp.obj[0].worldY = 12*gp.tileSize;
+        int i = 0;
+        //up left way key
+        gp.obj[i] = new OBJ_Coin_Bronze(gp);
+        gp.obj[i].worldX = 3*gp.tileSize;
+        gp.obj[i].worldY = 12*gp.tileSize;
+        i++;
         //down key
-        gp.obj[1] = new OBJ_Key(gp);
-        gp.obj[1].worldX = 25*gp.tileSize;
-        gp.obj[1].worldY = 47*gp.tileSize;
+        gp.obj[i] = new OBJ_Coin_Bronze(gp);
+        gp.obj[i].worldX = 25*gp.tileSize;
+        gp.obj[i].worldY = 47*gp.tileSize;
+        i++;
         //up right way key
-        gp.obj[2] = new OBJ_Key(gp);
-        gp.obj[2].worldX = 41*gp.tileSize;
-        gp.obj[2].worldY = 3*gp.tileSize;
-        //left way door
+        gp.obj[i] = new OBJ_Coin_Bronze(gp);
+        gp.obj[i].worldX = 41*gp.tileSize;
+        gp.obj[i].worldY = 3*gp.tileSize;
+        i++;
+        gp.obj[i] = new OBJ_Axe(gp);
+        gp.obj[i].worldX = 45*gp.tileSize;
+        gp.obj[i].worldY = 23*gp.tileSize;
+        i++;
+        gp.obj[i] = new OBJ_Shield_Blue(gp);
+        gp.obj[i].worldX = 10*gp.tileSize;
+        gp.obj[i].worldY = 5*gp.tileSize;
+        i++;
+        gp.obj[i] = new OBJ_Potion_Red(gp);
+        gp.obj[i].worldX = 23*gp.tileSize;
+        gp.obj[i].worldY = 8*gp.tileSize;
+
+        gp.obj[i] = new OBJ_Potion_Red(gp);
+        gp.obj[i].worldX = 41*gp.tileSize;
+        gp.obj[i].worldY = 5*gp.tileSize;
+        i++;
+        gp.obj[i] = new OBJ_Heart(gp);
+        gp.obj[i].worldX = 41*gp.tileSize;
+        gp.obj[i].worldY = 7*gp.tileSize;
+        i++;
+        gp.obj[i] = new OBJ_ManaCrystal(gp);
+        gp.obj[i].worldX = 42*gp.tileSize;
+        gp.obj[i].worldY = 3*gp.tileSize;
+        i++;
+
+
+        /*//left way door
         gp.obj[3] = new OBJ_Door(gp);
         gp.obj[3].worldX = 14*gp.tileSize;
         gp.obj[3].worldY = 23*gp.tileSize;
@@ -44,6 +64,7 @@ public class AssetSetter {
         gp.obj[4].worldX = 9*gp.tileSize;
         gp.obj[4].worldY = 40*gp.tileSize;
         //up left way
+
         gp.obj[5] = new OBJ_Door(gp);
         gp.obj[5].worldX = 21*gp.tileSize;
         gp.obj[5].worldY = 13*gp.tileSize;
@@ -62,26 +83,34 @@ public class AssetSetter {
         gp.npc[0].worldX = gp.tileSize*23;
         gp.npc[0].worldY = gp.tileSize*25;
 
-        gp.npc[1] = new NPC_Oldman(gp);
-        gp.npc[1].worldX = gp.tileSize*5;
-        gp.npc[1].worldY = gp.tileSize*5;
-
-        gp.npc[2] = new NPC_Oldman(gp);
-        gp.npc[2].worldX = gp.tileSize*45;
-        gp.npc[2].worldY = gp.tileSize*5;
-
-        gp.npc[3] = new NPC_Oldman(gp);
-        gp.npc[3].worldX = gp.tileSize*5;
-        gp.npc[3].worldY = gp.tileSize*5;
-
     }
     public void setMonster(){
-        gp.monster[0] = new MON_GreenSlime(gp);
-        gp.monster[0].worldX = gp.tileSize*23;
-        gp.monster[0].worldY = gp.tileSize*22;
+        int i = 0;
+        gp.monster[i] = new MON_GreenSlime(gp);
+        gp.monster[i].worldX = gp.tileSize*23;
+        gp.monster[i].worldY = gp.tileSize*22;
+        i++;
+        gp.monster[i] = new MON_GreenSlime(gp);
+        gp.monster[i].worldX = gp.tileSize*23;
+        gp.monster[i].worldY = gp.tileSize*27;
+    }
 
-        gp.monster[1] = new MON_GreenSlime(gp);
-        gp.monster[1].worldX = gp.tileSize*23;
-        gp.monster[1].worldY = gp.tileSize*27;
+    public void setInteractiveTile(){
+        int i = 0;
+        gp.iTile[i] = new IT_DryTree(gp, 10,21);
+        i++;
+        gp.iTile[i] = new IT_DryTree(gp, 11,21);
+        i++;
+        gp.iTile[i] = new IT_DryTree(gp, 12,21);
+        i++;
+        gp.iTile[i] = new IT_DryTree(gp, 13,21);
+        i++;
+        gp.iTile[i] = new IT_DryTree(gp, 14,21);
+        i++;
+        gp.iTile[i] = new IT_DryTree(gp, 15,21);
+        i++;
+
+
+
     }
 }
