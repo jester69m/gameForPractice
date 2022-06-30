@@ -7,6 +7,8 @@ import tile_interactive.InteractiveTile;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -26,6 +28,13 @@ public class GamePanel extends JPanel implements Runnable {
     //world setting
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
+
+    //FOR FULL SCREEN
+    /*int screenWidth2 = screenWidth;
+    int screenHeight2 = screenHeight;
+    BufferedImage tempScreen;*/
+    Graphics2D g2;
+
 
     //FPS
     final int FPS = 60;
@@ -48,6 +57,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity monster[] = new Entity[20];
     public InteractiveTile iTile[] = new InteractiveTile[50];
     public ArrayList<Entity> projectileList = new ArrayList<>();
+    public ArrayList<Entity> particleList = new ArrayList<>();
     public ArrayList<Entity> entityList = new ArrayList<>();
 
 
@@ -77,7 +87,22 @@ public class GamePanel extends JPanel implements Runnable {
      //   playMusic(0);
         stopMusic();
         gameState = TITLE_STATE;
+
+
+
+        //setFullScreen();
     }
+    /*public void setFullScreen(){
+        //GET local screen device
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gd = ge.getDefaultScreenDevice();
+        gd.setFullScreenWindow(Main.window);
+
+        //GET FULLSCREEN WIDTH AND HEIGHT
+        screenWidth2 = Main.window.getWidth();
+        screenHeight2 = Main.window.getHeight();
+
+    }*/
     public void startGameThread(){
         gameThread = new Thread(this);
         gameThread.start();
@@ -100,9 +125,11 @@ public class GamePanel extends JPanel implements Runnable {
             timer += (currentTime - lastTime);
             lastTime = currentTime;
 
-            if(delta > 1){
+            if(delta >= 1){
                 update();
                 repaint();
+                /*drawToTempScreen();
+                drawToScreen();*/
                 delta--;
                 drawCount++;
             }
@@ -143,6 +170,16 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
             }
+            for(int i = 0; i < particleList.size(); i++){
+                if(particleList.get(i) != null){
+                    if(particleList.get(i).alive==true){
+                        particleList.get(i).update();
+                    }
+                    if(particleList.get(i).alive == false){
+                        particleList.remove(i);
+                    }
+                }
+            }
             for(int i = 0; i< iTile.length; i++){
                 if(iTile[i] != null){
                     iTile[i].update();
@@ -152,6 +189,76 @@ public class GamePanel extends JPanel implements Runnable {
 
         }
     }
+
+    /*public void drawToTempScreen(){
+        //TITLE SCREEN
+        if(gameState == TITLE_STATE){
+            ui.draw(g2);
+        }
+        else {
+            //TILE
+            tileM.draw(g2);
+
+            //INTERACTIVE TILE
+            for (int i = 0; i < iTile.length; i++) {
+                if (iTile[i] != null) {
+                    iTile[i].draw(g2);
+                }
+            }
+
+            //ADD ENTITIES TO THE LIST
+            entityList.add(player);
+            for (int i = 0; i < npc.length; i++) {
+                if (npc[i] != null) {
+                    entityList.add(npc[i]);
+                }
+            }
+
+            for (int i = 0; i < obj.length; i++) {
+                if (obj[i] != null) {
+                    entityList.add(obj[i]);
+                }
+            }
+            for (int i = 0; i < monster.length; i++) {
+                if (monster[i] != null) {
+                    entityList.add(monster[i]);
+                }
+            }
+            for (int i = 0; i < projectileList.size(); i++) {
+                if (projectileList.get(i) != null) {
+                    entityList.add(projectileList.get(i));
+                }
+            }
+            for (int i = 0; i < particleList.size(); i++) {
+                if (particleList.get(i) != null) {
+                    entityList.add(particleList.get(i));
+                }
+            }
+
+            //SORT
+            Collections.sort(entityList, new Comparator<Entity>() {
+
+                @Override
+                public int compare(Entity e1, Entity e2) {
+
+                    int result = Integer.compare(e1.worldY, e2.worldY);
+                    return result;
+                }
+            });
+
+            //DRAW ENTITIES
+            for (int i = 0; i < entityList.size(); i++) {
+                entityList.get(i).draw(g2);
+            }
+
+            //EMPTY ENTITY LIST
+            entityList.clear();
+
+            //UI
+            ui.draw(g2);
+        }
+    }*/
+
     public void paintComponent(Graphics g){
 
         super.paintComponent(g);
@@ -196,6 +303,11 @@ public class GamePanel extends JPanel implements Runnable {
                     entityList.add(projectileList.get(i));
                 }
             }
+            for(int i = 0; i < particleList.size(); i++){
+                if(particleList.get(i) != null){
+                    entityList.add(particleList.get(i));
+                }
+            }
 
             //SORT
             Collections.sort(entityList, new Comparator<Entity>() {
@@ -222,6 +334,12 @@ public class GamePanel extends JPanel implements Runnable {
         }
         g2.dispose();
     }
+
+/*    public void drawToScreen(){
+        Graphics g = getGraphics();
+        g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
+        g.dispose();
+    }*/
     public void playMusic(int i){
         music.setFile(i);
         music.play();
@@ -230,6 +348,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void stopMusic(){
         if(music!=null) music.stop();
     }
+
     public void playSE(int i){
         se.setFile(i);
         se.play();
