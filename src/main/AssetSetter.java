@@ -52,7 +52,7 @@ public class AssetSetter {
         gp.obj[i] = new OBJ_ManaCrystal(gp);
         gp.obj[i].worldX = 42*gp.tileSize;
         gp.obj[i].worldY = 3*gp.tileSize;
-        i++;
+
 
 
         /*//left way door
@@ -91,6 +91,14 @@ public class AssetSetter {
         gp.monster[i].worldY = gp.tileSize*22;
         i++;
         gp.monster[i] = new MON_GreenSlime(gp);
+        gp.monster[i].worldX = gp.tileSize*24;
+        gp.monster[i].worldY = gp.tileSize*22;
+        i++;
+        gp.monster[i] = new MON_GreenSlime(gp);
+        gp.monster[i].worldX = gp.tileSize*25;
+        gp.monster[i].worldY = gp.tileSize*22;
+        i++;
+        gp.monster[i] = new MON_GreenSlime(gp);
         gp.monster[i].worldX = gp.tileSize*23;
         gp.monster[i].worldY = gp.tileSize*27;
     }
@@ -108,6 +116,5 @@ public class AssetSetter {
         gp.iTile[i] = new IT_DryTree(gp, 14,21);
         i++;
         gp.iTile[i] = new IT_DryTree(gp, 15,21);
-        i++;
     }
 }

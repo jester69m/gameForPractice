@@ -238,7 +238,7 @@ public class Player extends Entity{
 
             //Adjust player's worldX/Y for the attackArea
             switch(direction){
-                case "up"->{ worldY -= attackArea.height;}
+                case "up"->{ worldY -= (attackArea.height*1.2);}
                 case "down"->{ worldY += attackArea.height;}
                 case "left"->{worldX -= attackArea.width;}
                 case "right"->{worldX += attackArea.width;}
@@ -359,22 +359,18 @@ public class Player extends Entity{
                 gp.playSE(5);
 
                 int damage = attack - gp.monster[i].defense;
-                if(damage < 0)
-                    damage = 0;
-
+                if(damage < 0) damage = 0;
                 gp.monster[i].life -= damage;
                 gp.ui.addMessage(damage + "damage!");
                 gp.monster[i].invincible = true;
                 gp.monster[i].damageReaction();
 
                 if(gp.monster[i].life <= 0){
-
-                    gp.monster[i].dying=true;
+                    gp.monster[i].dying = true;
                     gp.ui.addMessage("Killed the "+gp.monster[i].name + "!");
                     gp.ui.addMessage("Exp + " + gp.monster[i].exp);
                     exp += gp.monster[i].exp;
                     checkLevelUp();
-
                 }
             }
         }

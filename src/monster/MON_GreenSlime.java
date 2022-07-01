@@ -19,7 +19,9 @@ public class MON_GreenSlime extends Entity {
 
         type = type_monster;
         name = "Green Slime";
-        speed = 4;
+        speed = 1;
+        alive = true;
+        dying = false;
         maxLife = 4;
         life = maxLife;
         attack = 2;
@@ -50,6 +52,7 @@ public class MON_GreenSlime extends Entity {
     }
 
     public void setAction(){
+
         actionLockCounter++;
 
         if(actionLockCounter == 120){
@@ -58,19 +61,15 @@ public class MON_GreenSlime extends Entity {
             int i = random.nextInt(100)+1;
             if(i<25){
                 direction = "up";
-                worldY -= speed;
             }
             if(i>25 && i <=50){
                 direction = "down";
-                worldY += speed;
             }
             if(i>50 && i <= 75){
                 direction = "left";
-                worldX -= speed;
             }
             if(i > 75 && i <=100){
                 direction = "right";
-                worldX += speed;
             }
             actionLockCounter=0;
 
