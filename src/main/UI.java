@@ -487,7 +487,7 @@ public class UI {
         switch (subState){
             case 0: options_top(frameX,frameY); break;
             case 1: break;
-            case 2: break;
+            case 2:options_control(frameX,frameY); break;
 
         }
     }
@@ -522,6 +522,11 @@ public class UI {
         g2.drawString("CONTROL", textX, textY);
         if(commandNum == 2){
             g2.drawString(">", textX-25, textY);
+            /*if(gp.keyH.enterPressed == true){
+                subState = 2;
+                commandNum = 0;
+            }*/
+
         }
 
         //END GAME
@@ -550,6 +555,47 @@ public class UI {
         g2.drawRect(textX, textY, 120,24);
         volumeWidth = 24 * gp.se.volumeScale;
         g2.fillRect(textX, textY, volumeWidth, 24);
+
+    }
+    public void options_control(int frameX, int frameY){
+        int textX;
+        int textY;
+
+        //TITLE
+        String text = "Control";
+        textX = getXForCenteredText(text);
+        textY = frameY + gp.tileSize;
+        g2.drawString(text, textX, textY);
+
+        textX = frameX + gp.tileSize;
+        textY += gp.tileSize;
+        g2.drawString("Move", textX, textY); textY += gp.tileSize;
+        g2.drawString("Confirm/Attack", textX, textY); textY += gp.tileSize;
+        g2.drawString("Shoot/Cast", textX, textY); textY += gp.tileSize;
+        g2.drawString("Character Screen", textX, textY); textY += gp.tileSize;
+        g2.drawString("Pause", textX, textY); textY += gp.tileSize;
+        g2.drawString("Options", textX, textY); textY += gp.tileSize;
+
+        textX = frameX + gp.tileSize*6;
+        textY = frameY + gp.tileSize*2;
+        g2.drawString("WASD", textX, textY); textY += gp.tileSize;
+        g2.drawString("ENTER", textX, textY); textY += gp.tileSize;
+        g2.drawString("F", textX, textY); textY += gp.tileSize;
+        g2.drawString("C", textX, textY); textY += gp.tileSize;
+        g2.drawString("P", textX, textY); textY += gp.tileSize;
+        g2.drawString("ESC", textX, textY); textY += gp.tileSize;
+
+        //BACK
+        textX = frameX + gp.tileSize;
+        textY = frameY + gp.tileSize*9;
+        g2.drawString("BACK", textX, textY);
+
+       /* if(commandNum==0){
+            g2.drawString(">", textX-25, textY);
+            if(gp.keyH.enterPressed == true){
+                subState = 0;
+            }
+        }*/
 
     }
     public int getItemIndexOnSlot(){
