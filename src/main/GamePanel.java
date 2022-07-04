@@ -1,5 +1,6 @@
 package main;
 
+//import ai.PathFinder;
 import entity.Entity;
 import entity.Player;
 import tile.TileManager;
@@ -28,6 +29,8 @@ public class GamePanel extends JPanel implements Runnable {
     //world setting
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
+    public final int maxMap = 10;
+    public int currentMap = 0;
 
     //FOR FULL SCREEN
     /*int screenWidth2 = screenWidth;
@@ -40,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int FPS = 60;
 
     //SYSTEM
-    TileManager tileM = new TileManager(this);
+    public TileManager tileM = new TileManager(this);
     public KeyHandler  keyH = new KeyHandler(this);
     Sound music = new Sound();
     Sound se = new Sound();
@@ -48,6 +51,8 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
     public EventHandler eHandler =  new EventHandler(this);
+    Config config = new Config(this);
+//    public PathFinder pFinder = new PathFinder(this);
     Thread gameThread;
 
    //ENTITY AND OBJECT
@@ -68,7 +73,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int PAUSE_STATE = 2;
     public final int DIALOGUE_STATE = 3;
     public final int CHARACTER_STATE = 4;
-    public final int optionsState = 5;
+    public final int OPTIONS_STATE = 5;
+    public final int GAMEOVER_STATE = 6;
 
     public GamePanel(){
 
@@ -104,6 +110,23 @@ public class GamePanel extends JPanel implements Runnable {
         screenHeight2 = Main.window.getHeight();
 
     }*/
+    public void retry(){
+        player.setDefaultPositions();
+        player.restoreLifeAndMana();
+        // aSetter.setNPC();
+        aSetter.setMonster();
+
+    }
+    public void restart(){
+        player.setDefaultPositions();
+        player.setDefaultValues();
+        player.restoreLifeAndMana();
+        player.setItems();
+        aSetter.setObject();
+        // aSetter.setNPC();
+        aSetter.setMonster();
+        aSetter.setInteractiveTile();
+    }
     public void startGameThread(){
         gameThread = new Thread(this);
         gameThread.start();

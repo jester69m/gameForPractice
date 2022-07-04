@@ -33,6 +33,7 @@ public class Entity {
     public boolean alive = true;
     public boolean dying = false;
     boolean hpBarOn = false;
+    public boolean onPath = false;
 
 
 
@@ -154,8 +155,7 @@ public class Entity {
         gp.particleList.add(p4);
 
     }
-    public void update(){
-        setAction();
+    public void checkCollision(){
 
         collisionOn = false;
         gp.cChecker.checkTile(this);
@@ -168,6 +168,11 @@ public class Entity {
         if(this.type == type_monster && contactPlayer == true){
             damagePlayer(attack);
         }
+    }
+    public void update(){
+        setAction();
+        checkCollision();
+
         //if collision is false, player can move
         if (collisionOn == false) {
             switch (direction) {
@@ -310,9 +315,79 @@ public class Entity {
             e.printStackTrace();
         }
         return image;
-
-
     }
 
+//    public void searchPath(int goalCol, int goalRow){
+//
+//        int startCol = (worldX + solidArea.x) / gp.tileSize;
+//        int startRow = (worldY + solidArea.y) / gp.tileSize;
+//
+//        gp.pFinder.setNodes(startCol,startRow,goalCol,goalRow,this);
+//
+//        if(gp.pFinder.search() == true){
+//
+//            //Next worldX/Y
+//            int nextX = gp.pFinder.pathList.get(0).col * gp.tileSize;
+//            int nextY = gp.pFinder.pathList.get(0).row * gp.tileSize;
+//
+//            //Entity solid area positions
+//            int enLeftX = worldX + solidArea.x;
+//            int enRightX = worldX + solidArea.x + solidArea.width;
+//            int enTopY = worldY + solidArea.y;
+//            int enBottomY = worldY + solidArea.y + solidArea.height;
+//
+//            if(enTopY > nextY && enLeftX >= nextX && enRightX<nextX + gp.tileSize){
+//                direction = "up";
+//            }
+//            else if(enTopY < nextY && enLeftX >= nextX && enRightX<nextX + gp.tileSize){
+//                direction = "down";
+//            }
+//            else if(enTopY >= nextY && enBottomY < nextY + gp.tileSize){
+//                if(enLeftX > nextX){
+//                    direction = "left";
+//                }
+//                if(enLeftX < nextX){
+//                    direction = "right";
+//                }
+//            }
+//            else if(enTopY > nextY && enLeftX > nextX){
+//                direction = "up";
+//                checkCollision();
+//                if(collisionOn == true){
+//                    direction="left";
+//                }
+//            }
+//            else if(enTopY > nextY && enLeftX < nextX){
+//                direction = "up";
+//                checkCollision();
+//                if(collisionOn == true){
+//                    direction="right";
+//                }
+//            }
+//            else if(enTopY < nextY && enLeftX > nextX){
+//                direction = "down";
+//                checkCollision();
+//                if(collisionOn == true){
+//                    direction="left";
+//                }
+//            }
+//            else if(enTopY < nextY && enLeftX < nextX){
+//                direction = "down";
+//                checkCollision();
+//                if(collisionOn == true){
+//                    direction="right";
+//                }
+//            }
+//            //if reach the goat then stop following
+//            int nextCol = gp.pFinder.pathList.get(0).col;
+//            int nextRow = gp.pFinder.pathList.get(0).row;
+//            if(nextCol == goalCol && nextRow == goalRow){
+//                onPath = false;
+//            }
+//
+//
+//
+//        }
+//    }
 
 }

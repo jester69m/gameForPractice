@@ -13,9 +13,9 @@ public class Main {
         window.setTitle("Time to play");
 
         GamePanel gamePanel = new GamePanel();
-
-
         window.add(gamePanel);
+
+        gamePanel.config.loadConfig();
 
         window.pack();
 

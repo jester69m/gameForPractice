@@ -26,12 +26,13 @@ public class Sound {
         soundURL[6] = getClass().getResource("/sound/damage-receive-sound.wav");
         soundURL[7] = getClass().getResource("/sound/burning.wav");
         soundURL[8] = getClass().getResource("/sound/cuttree.wav");
+        soundURL[9] = getClass().getResource("/sound/gameover-sound.wav");
     }
 
     public void setFile(int i){
         try{
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
-            clip = AudioSystem.getClip();
+            clip = AudioSystem.getClip(     );
             clip.open(ais);
             fc = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
             checkVolume();
@@ -50,7 +51,6 @@ public class Sound {
             case 3: volume = -5f; break;
             case 4: volume = 1f; break;
             case 5: volume = 6f; break;
-
         }
         fc.setValue(volume);
     }
