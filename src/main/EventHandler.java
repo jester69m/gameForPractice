@@ -40,10 +40,7 @@ public class EventHandler {
                 }
             }
         }
-
-
     }
-
     public  void checkEvent(){
         //Check if the player character is more then 1 tile away from the last event
         int xDistance = Math.abs(gp.player.worldX - previousEventX);
@@ -68,11 +65,9 @@ public class EventHandler {
             else if(hit(1, 13, 14,"any") == true){
                 teleport(0,19,42);
             }
-            else if(hit(1,13,12,"up") == true){
+            else if(hit(1,13,11,"up") == true){
                 speak(gp.npc[1][0]);
             }
-
-
         }
 
 
@@ -130,12 +125,6 @@ public class EventHandler {
         tempMap = map;
         tempCol = col;
         tempRow = row;
-        gp.currentMap = map;
-        gp.player.worldX = gp.tileSize * col;
-        gp.player.worldY = gp.tileSize * row;
-        previousEventX = gp.player.worldX;
-        previousEventY = gp.player.worldY;
-
         canTouchEvent = false;
         gp.playSE(10);
 

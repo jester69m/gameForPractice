@@ -41,6 +41,7 @@ public class Player extends Entity{
         getPlayerImage();
         getPlayerAttackImage();
         setItems();
+        setDefaultPositions();
     }
 
     public void setDefaultValues(){
@@ -70,8 +71,12 @@ public class Player extends Entity{
         defense = getDefense();
     }
     public void setDefaultPositions(){
-        worldX = gp.tileSize * 23;
-        worldY= gp.tileSize * 23;
+//        worldX = gp.tileSize * 23;
+//        worldY= gp.tileSize * 23;
+        worldX= gp.tileSize * 12;
+        worldY= gp.tileSize * 13;
+        gp.currentMap = 1;
+        speed = 4;
         direction = "down";
     }
     public void restoreLifeAndMana(){
@@ -85,6 +90,7 @@ public class Player extends Entity{
         inventory.add(currentWeapon);
         inventory.add(currentShield);
         inventory.add(new OBJ_Key(gp));
+        //final need to delete axe !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         inventory.add(new OBJ_Axe(gp));
 
 
@@ -433,7 +439,7 @@ public class Player extends Entity{
     }
     public void selectItem(){
 
-        int itemIndex = gp.ui.getItemIndexOnSlot();
+        int itemIndex = gp.ui.getItemIndexOnSlot(gp.ui.playerSlotCol,gp.ui.playerSlotRow);
 
         if(itemIndex < inventory.size()){
 
