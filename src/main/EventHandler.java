@@ -62,10 +62,10 @@ public class EventHandler {
                 healingPool(gp.DIALOGUE_STATE);
             }
 
-            else if(hit(0,19,42,"any") == true){
-                teleport(1, 13, 1);
+            else if(hit(0,19,43,"any") == true){
+                teleport(1, 13, 14);
             }
-            else if(hit(1, 13, 1,"any") == true){
+            else if(hit(1, 13, 14,"any") == true){
                 teleport(0,19,42);
             }
             else if(hit(1,13,12,"up") == true){
@@ -135,7 +135,6 @@ public class EventHandler {
         gp.player.worldY = gp.tileSize * row;
         previousEventX = gp.player.worldX;
         previousEventY = gp.player.worldY;
-
 
         canTouchEvent = false;
         gp.playSE(10);

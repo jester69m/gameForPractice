@@ -115,7 +115,7 @@ public class Entity {
 
     }
     public void dropItem(Entity droppedItem){
-        for(int i = 0; i < gp.obj.length; i++){
+        for(int i = 0; i < gp.obj[1].length; i++){
             if(gp.obj[gp.currentMap][i] == null){
                 gp.obj[gp.currentMap][i] = droppedItem;
                 gp.obj[gp.currentMap][i].worldX = worldX;
@@ -216,7 +216,6 @@ public class Entity {
             gp.player.invincible = true;
         }
     }
-
     public void draw(Graphics2D g2) {
 
         BufferedImage image = null;
@@ -282,7 +281,6 @@ public class Entity {
             changeAlpha(g2,1f);
         }
     }
-
    public void dyingAnimation(Graphics2D g2){
 
         dyingCounter++;
@@ -305,7 +303,6 @@ public class Entity {
     public void changeAlpha(Graphics2D g2,float alphaValue){
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alphaValue));
     }
-
     public BufferedImage setup(String imagePath,int width,int height){
 
         UtilityTool uTool = new UtilityTool();

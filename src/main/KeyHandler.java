@@ -197,7 +197,7 @@ public class KeyHandler implements KeyListener {
         int maxCommandNum = 0;
         switch (gp.ui.subState){
             case 0: maxCommandNum = 4;break;
-            case 2: maxCommandNum = 1;break;
+            case 3: maxCommandNum = 1;break;
             }
         if(code == KeyEvent.VK_W){
             gp.ui.commandNum--;
@@ -260,6 +260,7 @@ public class KeyHandler implements KeyListener {
             }
             else if(gp.ui.commandNum == 1){
                 gp.gameState = gp.TITLE_STATE;
+                gp.ui.titleScreenState = 0;
                 gp.restart();
             }
         }
