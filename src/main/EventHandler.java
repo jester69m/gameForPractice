@@ -63,7 +63,7 @@ public class EventHandler {
                 teleport(1, 13, 14);
             }
             else if(hit(1, 13, 14,"any") == true){
-                teleport(0,19,42);
+                teleport(0,19,43);
             }
             else if(hit(1,13,11,"up") == true){
                 speak(gp.npc[1][0]);

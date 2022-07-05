@@ -79,11 +79,11 @@ public class AssetSetter {
         gp.obj[numMap][i].worldX = 5*gp.tileSize;
         gp.obj[numMap][i].worldY = 16*gp.tileSize;
 
-        //left way door
-        i++;
-        gp.obj[numMap][i] = new OBJ_Door(gp);
-        gp.obj[numMap][i].worldX = 14*gp.tileSize;
-        gp.obj[numMap][i].worldY = 23*gp.tileSize;
+//        //left way door
+//        i++;
+//        gp.obj[numMap][i] = new OBJ_Door(gp);
+//        gp.obj[numMap][i].worldX = 14*gp.tileSize;
+//        gp.obj[numMap][i].worldY = 23*gp.tileSize;
 
         //castle door
         i++;

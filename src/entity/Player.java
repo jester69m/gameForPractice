@@ -47,7 +47,7 @@ public class Player extends Entity{
     public void setDefaultValues(){
         worldX = gp.tileSize * 23;
         worldY= gp.tileSize * 23;
-        speed = 4;
+        speed = 3;
         direction = "down";
 
         //PLAYER STATUS
@@ -61,7 +61,7 @@ public class Player extends Entity{
         dexterity = 1;
         exp = 0;
         nextLevelExp = 5;
-        coin = 0;
+        coin = 100;
         currentWeapon = new OBJ_Sword_Normal(gp);
         currentShield = new OBJ_Shield_Wood(gp);
         projectile = new OBJ_Fireball(gp);
@@ -71,12 +71,11 @@ public class Player extends Entity{
         defense = getDefense();
     }
     public void setDefaultPositions(){
-//        worldX = gp.tileSize * 23;
-//        worldY= gp.tileSize * 23;
-        worldX= gp.tileSize * 12;
-        worldY= gp.tileSize * 13;
-        gp.currentMap = 1;
-        speed = 4;
+        worldX = gp.tileSize * 23;
+        worldY= gp.tileSize * 23;
+//        worldX= gp.tileSize * 12;
+//        worldY= gp.tileSize * 13;
+//        gp.currentMap = 1;
         direction = "down";
     }
     public void restoreLifeAndMana(){
@@ -90,10 +89,6 @@ public class Player extends Entity{
         inventory.add(currentWeapon);
         inventory.add(currentShield);
         inventory.add(new OBJ_Key(gp));
-        //final need to delete axe !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        inventory.add(new OBJ_Axe(gp));
-
-
     }
     public int getAttack(){
         attackArea = currentWeapon.attackArea;
