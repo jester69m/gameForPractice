@@ -106,14 +106,12 @@ public class EventHandler {
 
         return hit;
     }
-
     public void damagePit(int gameState){
         gp.gameState = gameState;
         gp.ui.currentDialogue = "You fall into a pit";
         gp.player.life -= 1;
         canTouchEvent = false;
     }
-
     public void healingPool(int gameState){
         if(gp.keyH.enterPressed == true){
             gp.gameState = gameState;
@@ -126,25 +124,23 @@ public class EventHandler {
 
         gp.keyH.enterPressed = false;
     }
-
     public void teleport(int map,int col,int row){
 
         gp.gameState =gp.TRANSITION_STATE;
         tempMap = map;
         tempCol = col;
         tempRow = row;
-        //gp.currentMap = map;
-        /*gp.player.worldX = gp.tileSize * col;
+        gp.currentMap = map;
+        gp.player.worldX = gp.tileSize * col;
         gp.player.worldY = gp.tileSize * row;
         previousEventX = gp.player.worldX;
-        previousEventY = gp.player.worldY;*/
+        previousEventY = gp.player.worldY;
 
 
         canTouchEvent = false;
         gp.playSE(10);
 
     }
-
     public void speak(Entity entity){
         if(gp.keyH.enterPressed == true){
             gp.gameState = gp.DIALOGUE_STATE;

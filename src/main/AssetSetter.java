@@ -213,22 +213,22 @@ public class AssetSetter {
 
 
 
+        gp.iTile[numMap][i] = new IT_DryTree(gp, 20,48);
+        i++;
+        gp.iTile[numMap][i] = new IT_DryTree(gp, 21,48);
+        i++;
+        gp.iTile[numMap][i] = new IT_DryTree(gp, 22,48);
+        i++;
+        gp.iTile[numMap][i] = new IT_DryTree(gp, 23,48);
+        i++;
         gp.iTile[numMap][i] = new IT_DryTree(gp, 20,47);
-        i++;
-        gp.iTile[numMap][i] = new IT_DryTree(gp, 21,47);
-        i++;
-        gp.iTile[numMap][i] = new IT_DryTree(gp, 22,47);
-        i++;
-        gp.iTile[numMap][i] = new IT_DryTree(gp, 23,47);
         i++;
         gp.iTile[numMap][i] = new IT_DryTree(gp, 20,46);
         i++;
         gp.iTile[numMap][i] = new IT_DryTree(gp, 20,45);
         i++;
-        gp.iTile[numMap][i] = new IT_DryTree(gp, 20,44);
+        gp.iTile[numMap][i] = new IT_DryTree(gp, 19,45);
         i++;
         gp.iTile[numMap][i] = new IT_DryTree(gp, 19,44);
-        i++;
-        gp.iTile[numMap][i] = new IT_DryTree(gp, 19,43);
     }
 }

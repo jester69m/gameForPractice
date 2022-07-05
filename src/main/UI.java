@@ -98,9 +98,10 @@ public class UI {
             drawInventory();
         }
         //OPTIONS STATE
-        else if(gp.gameState == gp.optionsState){
+        else if(gp.gameState == gp.OPTIONS_STATE){
             drawOptionsScreen();
         }
+
     }
     public void drawPlayerLife(){
 
@@ -471,7 +472,6 @@ public class UI {
             }
         }
     }
-
     public void drawOptionsScreen(){
         g2.setColor(Color.white);
         g2.setFont(g2.getFont().deriveFont(32F));
@@ -491,7 +491,6 @@ public class UI {
 
         }
     }
-
     public  void options_top(int frameX, int frameY){
         int textX;
         int textY;
